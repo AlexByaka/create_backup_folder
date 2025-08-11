@@ -1,0 +1,33 @@
+# Временные файлы
+*.tmp
+*.swp
+*~
+
+# Файлы и папки PyCharm
+.idea/
+*.iml
+
+# Кэш и логи
+.PyCharm*/
+*.log
+out/
+build/
+__pycache__/
+logs/
+log/
+
+# Виртуальное окружение
+venv/
+djvenv/
+
+# Компиляция
+dist/
+build/
+*.spec
+
+#Файлы и папки не для публикации
+private
+keys/
+key_part.py
+results/
+
