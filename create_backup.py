@@ -56,7 +56,7 @@ def copy_folder(src, dst):
         for file in files:
             src_path = os.path.join(root, file)
             dst_path = os.path.join(target_dir, file)
-            logger.debug(f"копируем {src_path} в {dst_path}")
+            logger.info(f"копируем {src_path} в {dst_path}")
 
             try:
                 shutil.copy(src_path, dst_path)
@@ -72,14 +72,19 @@ if __name__ == '__main__':
     logger.setLevel(logging.INFO)
 
     if os.path.exists('./config/appsettings.json'):
-        SETTINGS = load_json('./config/appsettings.json')
-
-        logger.debug(f'Старт')
-        src_f = SETTINGS['src_f']
-        dst_f = SETTINGS['dst_f']
+        try:
+            SETTINGS = load_json('./config/appsettings.json')
+            src_f = SETTINGS['src_f']
+            dst_f = SETTINGS['dst_f']
+        except Exception as e:
+            logger.exception('При открытии файла appsettings.json произошла ошибка')
         if src_f and dst_f:
-            copy_folder(src_f, dst_f)
-            logger.info(f'Копирование {src_f} в {dst_f} завершено')
+            try:
+                logger.info(f'Копирование {src_f} в {dst_f} начато')
+                copy_folder(src_f, dst_f)
+                logger.info(f'Копирование {src_f} в {dst_f} завершено')
+            except Exception as e:
+                logger.exception('При открытии файла appsettings.json произошла ошибка')
         else:
             logger.info(f'{src_f} или {dst_f} не определены в файле конфигурации')
     else:
